@@ -15,4 +15,6 @@ plugins:
 rules:
   eqeqeq: off
   no-underscore-dangle: off
+  '@typescript-eslint/naming-convention': off
+  '@typescript-eslint/no-shadow': off
 

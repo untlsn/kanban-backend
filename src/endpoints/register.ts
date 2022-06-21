@@ -1,6 +1,6 @@
-import { FastifyInstance } from 'fastify';
 import collections from '../db/collections';
-import createError from '../helpers/createError';
+import createRes from '../helpers/createRes';
+import fastify from '../init';
 
 interface Body {
   login: string,
@@ -8,7 +8,7 @@ interface Body {
   password: string,
 }
 
-export default function register(fastify: FastifyInstance) {
+export default function register() {
   fastify.post('/register', async (req, rep) => {
     const users = await collections.users;
     const { login, email, password } = req.body as Body;
@@ -21,9 +21,10 @@ export default function register(fastify: FastifyInstance) {
       ],
     });
 
-    // If user exist return why register failed (same login or email)
+    // If user exist return why board failed (same login or email)
     if (user) {
-      return createError(
+      return createRes(
+        rep,
         409,
         'User with this data exist',
         {

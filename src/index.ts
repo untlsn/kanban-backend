@@ -1,12 +1,8 @@
-import Fastify from 'fastify';
 import registers from './registers';
-import test from './test';
 import endpoints from './endpoints';
+import fastify from './init';
+import execAll from './helpers/execAll';
 
-const fastify = Fastify({
-  logger: true,
-});
-
-[registers, test, endpoints].forEach((fn) => fn(fastify));
+execAll(registers, endpoints);
 
 fastify.listen({ port: 8080 });

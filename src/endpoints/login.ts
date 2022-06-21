@@ -1,16 +1,17 @@
-import { FastifyInstance } from 'fastify';
-import createError from '../helpers/createError';
+import { createResCreator } from '../helpers/createRes';
 import collections from '../db/collections';
+import fastify from '../init';
 
 interface Body {
   login: string,
   password: string,
 }
 
-export default function login(fastify: FastifyInstance) {
+export default function login() {
   fastify.post('/login', async (req, rep) => {
     const users = await collections.users;
     const { login: loginLike, password } = req.body as Body;
+    const createRes = createResCreator(rep);
 
     // if user login using email or login
     const user = await (loginLike.includes('@')
@@ -19,11 +20,11 @@ export default function login(fastify: FastifyInstance) {
     );
 
     if (!user) {
-      return createError(404, 'User does not exist');
+      return createRes(404, 'User does not exist');
     }
 
     if (user.password != password) {
-      return createError(403, 'Wrong password');
+      return createRes(403, 'Wrong password');
     }
 
     return rep.jwtSign({ _id: user._id });

@@ -1,8 +1,8 @@
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
-import { FastifyInstance } from 'fastify';
+import fastify from './init';
 
-export default function registers(fastify: FastifyInstance) {
+export default function registers() {
   fastify.register(cors, {
     origin: '*',
   });
