@@ -2,18 +2,27 @@ import { FastifyInstance } from 'fastify';
 import createError from '../helpers/createError';
 import collections from '../db/collections';
 
+interface Body {
+  login: string,
+  password: string,
+}
+
 export default function login(fastify: FastifyInstance) {
   fastify.post('/login', async (req, rep) => {
     const users = await collections.users;
-    const body = req.body as Record<string, string>;
+    const { login: loginLike, password } = req.body as Body;
 
-    const user = await users.findOne({ login: body.login });
+    // if user login using email or login
+    const user = await (loginLike.includes('@')
+      ? users.findOne({ email: loginLike })
+      : users.findOne({ login: loginLike })
+    );
 
     if (!user) {
-      return createError(404, `User with login '${body.login}' does not exist`);
+      return createError(404, 'User does not exist');
     }
 
-    if (user.password != body.password) {
+    if (user.password != password) {
       return createError(403, 'Wrong password');
     }
 
