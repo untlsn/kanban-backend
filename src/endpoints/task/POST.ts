@@ -33,7 +33,7 @@ export default function POST() {
     }
 
     const { _id: userID } = await req.jwtVerify();
-    const { tasks, subtasks, boards } = await lazyCollections();
+    const { tasks, boards } = await lazyCollections();
 
     const board = await boards.findOne({ _id: new ObjectId(body.board) });
 
@@ -43,17 +43,12 @@ export default function POST() {
 
     const task = await tasks.insertOne({
       title: body.title,
-      desc: body.desc,
+      desc: body.desc || '',
       status: body.status,
       _board: body.board,
+      subtasks: body.subtasks.map((sub) => ({ title: sub.title, done: !!sub.done })),
     });
 
-    const _task = task.insertedId.toString();
-
-    if (body.subtasks) {
-      subtasks.insertMany(body.subtasks.map((subtask) => ({ ...subtask, _task })));
-    }
-
-    return createRes(200, 'Task created');
+    return createRes(200, 'Task created', { _id: task.insertedId });
   });
 }

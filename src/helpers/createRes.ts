@@ -12,7 +12,7 @@ const errorNames = {
 
 type Code = keyof typeof errorNames;
 
-export default function createRes(rep: FastifyReply, statusCode: Code, message, data?) {
+export default function createRes(rep: FastifyReply, statusCode: Code, message, data?, spread?) {
   rep.status(statusCode);
 
   return {
@@ -20,9 +20,12 @@ export default function createRes(rep: FastifyReply, statusCode: Code, message, 
     error: errorNames[statusCode],
     message,
     data,
+    ...spread,
   };
 }
 
 export function createResCreator(rep: FastifyReply) {
-  return (statusCode: Code, message, data?) => createRes(rep, statusCode, message, data);
+  return (statusCode: Code, message, data?, spread?) => (
+    createRes(rep, statusCode, message, data, spread)
+  );
 }

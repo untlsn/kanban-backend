@@ -14,12 +14,10 @@ export interface Task {
   desc: string,
   status: number,
   _board: string
-}
-
-export interface Subtask {
-  title: string,
-  done: boolean
-  _task: string
+  subtasks?: {
+    title: string,
+    done: boolean
+  }[]
 }
 
 export interface Status {
