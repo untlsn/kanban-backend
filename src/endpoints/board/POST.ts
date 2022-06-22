@@ -9,11 +9,11 @@ export default function POST() {
     const boards = await collections.boards;
     const { name } = req.body as { name: string };
 
-    boards.insertOne({
+    const boardID = await boards.insertOne({
       owner: _id,
       name,
     });
 
-    return createRes(rep, 201, 'Board created');
+    return createRes(rep, 201, 'Board created', { _id: boardID.insertedId });
   });
 }
