@@ -3,7 +3,8 @@
     "module": "ESNext",
     "target": "ESNext",
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "baseUrl": "./src"
   },
   "exclude": [
     "node_modules"
