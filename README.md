@@ -1,7 +1,7 @@
 ## Description
 This is an api of my kanban app
 
-[Frontend]('https://github.com/untlsn/kanban-frontend')
+[Frontend](https://github.com/untlsn/kanban-frontend)
 
 ## What to do
 
