@@ -1,6 +1,6 @@
 import { Collection } from 'mongodb';
 import {
-  Board, User, Task,
+  Board, User, Task, Status,
 } from './documents';
 import getDb from './getDb';
 
@@ -16,6 +16,9 @@ export default async function lazyCollections() {
     },
     get tasks(): Collection<Task> {
       return db.collection('tasks');
+    },
+    get status(): Collection<Status> {
+      return db.collection('status');
     },
   };
 }

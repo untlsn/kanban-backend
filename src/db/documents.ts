@@ -21,6 +21,9 @@ export interface Task {
 }
 
 export interface Status {
-  name: string,
+  statuses: {
+    name: string,
+    color: string,
+  }[]
   _board: string
 }

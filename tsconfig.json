@@ -4,7 +4,6 @@
     "target": "ESNext",
     "sourceMap": true,
     "moduleResolution": "node",
-    "baseUrl": "./src"
   },
   "exclude": [
     "node_modules"
