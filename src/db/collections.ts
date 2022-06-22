@@ -1,6 +1,6 @@
 import { Collection } from 'mongodb';
 import {
-  Board, User, Task, Subtask,
+  Board, User, Task,
 } from './documents';
 import getDb from './getDb';
 
@@ -17,9 +17,6 @@ const collections = {
   },
   get tasks(): Promise<Collection<Task>> {
     return getCollection('tasks');
-  },
-  get subtasks(): Promise<Collection<Subtask>> {
-    return getCollection('subtasks');
   },
 };
 

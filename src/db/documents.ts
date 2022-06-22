@@ -22,5 +22,5 @@ export interface Task {
 
 export interface Status {
   name: string,
-  owner: string
+  _board: string
 }

@@ -28,7 +28,7 @@ export default function GET() {
   });
 
   // Only title, status and subtasks counts
-  fastify.get('/many-task/:board', async (req, rep) => {
+  fastify.get('/task/many/:board', async (req, rep) => {
     const { board: boardID } = req.params as { board: string };
     const { tasks, boards } = await lazyCollections();
     const createRes = createResCreator(rep);
@@ -44,7 +44,10 @@ export default function GET() {
       return createRes(401, 'You aren\'t owner of this board');
     }
 
-    const findTasks = await tasks.find({ _board: boardID }).toArray();
+    const findTasks = await tasks
+      .find({ _board: boardID })
+      .map(({ title, status, subtasks }) => ({ title, status, subtasksLength: subtasks.length }))
+      .toArray();
 
     return createRes(
       200,
